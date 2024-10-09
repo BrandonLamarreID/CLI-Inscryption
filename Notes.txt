@@ -1,0 +1,103 @@
+Commands:
+in order of priority
+chkblood(check blood, when turn is passed, reset to 0)
+saccard(sacrifice card 1-4 on table)
+chkhand(check cards in hand)
+chktable(prints table contents as table heh)
+turn(end turn, apply combat)
+chkscale(checks the value of the scale, print for readability as towards each direction rather than just an int from -5 to 5?)
+chkcard(check specific one in hand for cost and power, or on table: T(able)E(enemy)1-4 TP(layer)1-4 H(and)1-max)
+
+
+
+
+Combat Systems: 
+each card would need to contain a value already due to blood, so have it also contain an attack score, also health score. 
+Perhaps store cards as strings instead of objects? 
+cardname:1:2:2
+blood, health, attack
+Scale is a int that starts at 0, and can go from +5 to -5, +5 means the player wins, -5 means the player loses
+cards can be copied from the player's card design, just inverse the damage int before apply to player side so scaleint goes down accordingly
+use RNG to decide what cards the enemy grabs and places where
+
+Backend Systems:
+Store each side of table as two seperate lists, for ease of comparing each card i can just see if it has anything in the corrisponding list's location, and apply damage
+store player cards in three lists, hand deck, active deck, inactive deck
+inactive deck is just a list of what cards the player has, it does not get changed for whatever reason
+active deck is the deck during combat, when the play takes a card it is removed from the active deck and moved to the hand deck
+
+
+
+fun stuff to do:
+"The Ancient.txt" file is the manual for containing commands, explainations, quirks and what they do. it is a pun, txt is shortform for text, the file is named: "The Ancient Text" suitable for a rulesbook, no?
+print ascii version of inscryption logo when game starts, maybe ascii stoat at somepoint as easteregg? maybe for result of hidden command.
+Save and load system? just print the current deck to a txt file
+
+
+       .,,.                                                                   
+       ,KMKkkkkkkkklll. ..                             ..       .,,,.         
+    .lkKKl,,,,,,,lkkKMKkKkll. ..                 ..,l,lKKkkkkkkkKMMKl.        
+   .lKKl.           .,,lkkKMKkKk,. ,l.  ,l. ,l. .kKKKkkl,,,,,,,,,lkKMKkl.     
+ .,kMk.   .,,,,,.         .,,lkKMKkKMKkkKMklKMKkKKl,.       .,,,.  .,kMKl.    
+ .kMk.    .,lkKMKkkl.        ...,lKMMk,llkMMklKKl.  .... .lkKKl,.    .kMl     
+ .kMl         .,,lKMKkl.  .. lKl. .ll.   .ll. ..  ,lkKKklKMKl.        lmk.    
+.kMk.             .lKMMKllKKkKKKl                .kMKKMMMMMl..        lmk.    
+ ,KK,              .KMKKKKklkKl..                 ,l..,lKKKKKx,l,    ,KKl.    
+.lKK,          ..,,lMK,....  ..                         ..lKkKMMl .. lMKl.    
+ lMl         ..lKKKKMK,                                   .. lKKKlkl .kMk.    
+.kMl         lKKKKMk,.                                       ...lKMK, lMk.    
+ lMk.      ,lkMk.,l.                                             ,lkl,KK,     
+ ,KMl     .kkll,                     .,.                ..         ..,Kk,.    
+ .kMk.    lMl      .lkkkkkkkl,,.    ,KMl                lk,     .lkkkkKMMK,   
+  ,KMl    ,l.     .lklkMk,,,lKMKkl,lKMMl                lMKl,,lkkkl,,kMMMMk.  
+   lMK.               lMl    .,lkkKMKl,.                .lKMMKkl.   .kMKKMK,  
+   ,KMKl.             lMk.       .kMl                     ,KMk.  .,lKKl.,KMk. 
+ .,lKKkl.             ,KMKl,,,,,lKKl.      .lkkkkkkkkkl.   ,KMKkkKKkl.  lMK,  
+ ,KMKk,.               .lkkkkkkkkl.        lMMMMMMMMMMMl    .,,,,,.     ,KMk. 
+ .lKMMK,                                   .kMMMMMMMMMMl                 lMMl 
+  .lkKMk..l,                .ll,.           .lKMMMMMMkl.       .,ll.     lMK. 
+ .,,lKKl.lMKkl.            ,KK,               .,lKMKl.           ,KK,    lMK, 
+ .lKMMk,..,,,,.            lMl                  .kMl              lMl   ,KMMK,
+   ,KMMK.   ,Kl            lMl          .,,,,,lkKMMKkl,,.         lMl   lMKkl.
+  .kMkl.   ,KK,            lMl          .kMMMMKKMMMMKKMMKl.      ,KMl   lMKl. 
+  .lkKKkkl.lMKkkl.         ,KKl.         .lkKMkkMKKMkkMk,.     .lKMk.   .kMMl 
+     .lKMMl.,,,,. ..        ,KMKkl.         .lKKl..lKKl.      .kKkl.   ,kKMK, 
+      .kMMKk,    .kl.,,.     .,,lkl.   ..     ..    ..  ..   .ll.   .,,kMMk.  
+     .lKMMMKl,,,.lMKKKl.               lKl.           .lKl          lMKKMK,   
+    .kMMKkkkkkKMl.lkk,                 .kMKl,.     .,lKKl.       .lkKMl.,.    
+   .lKMMk.    lMKkKMMKk.,,              .lkKMKkkkkkKMKl.      ,k,lKKMK,       
+     ,KKl. .. .,,,,kMKl.lK, .,,.           .,,,,,,,,,.   ,;,lkKMKk,.,.        
+   .lKMk. .kl.l,   .,.  lMKkKKKklkk,.,,,,.             .,kMMKKMk,.            
+   .lKMK,.kMKkk,        ,kl,,.lMKlkKKKkKMK,.,,lllllkkkkkKKll,lMl              
+   .lKMk..,,,.                .,. lKl. .ll.lKKMKkl,lKKl...  .kMKl.            
+  .lKMk.                   ,l. .. ..       ...l,    ..     ,KMKl,.            
+  ,KMKl.  ..               lMklKl                          lMMk.              
+ .lKMkl.  lk.,l.  .lx,     ,kMKl.                                             
+ .lKk.    lMKKMl lKKl                    
+
+
+                                                                                                                                                                               
+                                                                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                               
+                                                                                                                                                                               
+                                                                                                                                                                               
+                                ***                         ************                     ************                                      **                              
+  *****  *****     *****    ************        *******      *****   *****  *****       ****  *****   *****   **************    *****      ***********      ****      *****    
+  *****   ******    ****   *****   ******    ************    *****    ****   ******    ****   *****    ****  *****************  ****     ******   *****     *****     ****     
+  *****   ******    ****   *****     ***    *****     ****   *****    ****    ******  ***     *****    ****  ***   *****   ***  ****    *****       *****   ******    ****     
+  *****   ********  ****   ******         *****        **    *************     *****  ***     ************   **    *****   ***  ****   *****        *****   *******   ****     
+  *****   ********* ****    *******      ******              ***********        ********      ***********          *****        ****  ******        ******  ********  ****     
+  *****   ********* ****     ********    *****               **********          ******       *****                *****        ****  ******         *****  *** ***** ****     
+  *****   ****  ********       ********  *****               ***** *****          *****       *****                *****        ****  ******        ******  ***   ********     
+  *****   ****  ********         ******* *****               *****   ****         *****       *****                *****        ****   *****        *****   ***   ********     
+  *****   ****   *******  ***     ****** ******              *****   *****        *****       *****                *****        ****   ******       *****   ***    *******     
+  *****   ****    ******  *****   *****   ******       ***   *****    *******     *****      ******                *****        ****     *****    *****     ***     ******     
+  *****  ****      *****  *************     ******  ******  **** *      *****     *****      ***                   *****        *****     ************      ****     *****     
+  ***    **                   ******         ************    ******  **           *****      *   ********         *****          ****        ******           **               
+                                                       *   *******************     ***   *      **********                                                                     
+                                              *****  **********      *** *****     **    * **    **        ***** *  *** **                                                     
+                                                ************ *             ************                      **********                                                        
+                                                                           * **********                         ***                                                            
+                                                                                *****                                                                                          
+                                                                                                                                                                               
+                                                                                                                                         
